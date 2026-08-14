@@ -13,6 +13,10 @@ Northstar 是一个本地优先的个人操作系统，用于管理项目、任�
 Northstar 不要求账户、遥测、云同步或外部 AI API。Dashboard 只监听
 `127.0.0.1:18766`；CLI 是脚本和 Codex 自动化唯一受支持的数据边界。
 
+![Northstar Life OS 首页](docs/screenshots/northstar-dashboard.png)
+
+_截图使用不会持久化的演示模式生成，不包含个人数据库内容。_
+
 > **项目状态：** `v0.1.0` 是早期公开版本。项目、任务、习惯、日程、
 > 收件箱和复盘已经形成真实数据闭环；战略、学习、财务、健康、关系和
 > 知识图谱仍是扩展入口。真实模式不会用演示数字冒充个人数据。
@@ -47,6 +51,20 @@ pnpm dev
 - 支持带清单和哈希校验的完整备份；恢复必须显式确认。
 - 私密条目在浏览器中加密，普通搜索、导出和 CLI 上下文永远不包含私密库。
 - 提供每日计划、收件箱整理、日/周复盘和项目健康检查等 Codex Skills。
+
+## 产品一览
+
+### 让项目进展来自真实行动
+
+![Northstar 项目与任务工作流](docs/screenshots/northstar-projects.png)
+
+### 安排今天，建立长期节奏
+
+![Northstar 习惯、日程与响应式界面](docs/screenshots/northstar-rhythm.png)
+
+### 不离开当前上下文，也能快速搜索和行动
+
+![Northstar 命令面板](docs/screenshots/northstar-command-palette.png)
 
 ## 数据与隐私边界
 

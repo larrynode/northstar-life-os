@@ -125,7 +125,6 @@ const DEMO_SNAPSHOT: DashboardSnapshot = {
   ],
 };
 
-const cloneDemo = (): DashboardSnapshot => JSON.parse(JSON.stringify(DEMO_SNAPSHOT)) as DashboardSnapshot;
 const cn = (...parts: Array<string | false | null | undefined>) => parts.filter(Boolean).join(" ");
 
 function dateKey(value: string | Date): string {
@@ -133,6 +132,35 @@ function dateKey(value: string | Date): string {
   const parts = new Intl.DateTimeFormat("en-US", { timeZone: "Asia/Shanghai", year: "numeric", month: "2-digit", day: "2-digit" }).formatToParts(date);
   const part = (type: Intl.DateTimeFormatPartTypes) => parts.find((entry) => entry.type === type)?.value ?? "";
   return `${part("year")}-${part("month")}-${part("day")}`;
+}
+
+function cloneDemo(): DashboardSnapshot {
+  const snapshot = JSON.parse(JSON.stringify(DEMO_SNAPSHOT)) as DashboardSnapshot;
+  const originalAnchor = new Date(DEMO_SNAPSHOT.generatedAt).getTime();
+  const currentAnchor = new Date(`${dateKey(new Date())}T09:00:00+08:00`);
+  const offset = currentAnchor.getTime() - originalAnchor;
+  const shiftDateTime = (value: string) => new Date(new Date(value).getTime() + offset).toISOString();
+  const shiftDate = (value: string) => dateKey(new Date(new Date(`${value}T12:00:00+08:00`).getTime() + offset));
+
+  snapshot.generatedAt = currentAnchor.toISOString();
+  snapshot.tasks = snapshot.tasks.map((task) => ({
+    ...task,
+    dueAt: task.dueAt ? shiftDateTime(task.dueAt) : null,
+    updatedAt: shiftDateTime(task.updatedAt),
+  }));
+  snapshot.habits = snapshot.habits.map((habit) => ({
+    ...habit,
+    completedDates: habit.completedDates.map(shiftDate),
+  }));
+  snapshot.schedule = snapshot.schedule.map((event) => ({
+    ...event,
+    startAt: shiftDateTime(event.startAt),
+    endAt: event.endAt ? shiftDateTime(event.endAt) : null,
+  }));
+  snapshot.inbox = snapshot.inbox.map((item) => ({ ...item, createdAt: shiftDateTime(item.createdAt) }));
+  snapshot.reviews = snapshot.reviews.map((review) => ({ ...review, createdAt: shiftDateTime(review.createdAt) }));
+
+  return demoRecalculate(snapshot);
 }
 
 function formatDateTime(value: string | null): string {
