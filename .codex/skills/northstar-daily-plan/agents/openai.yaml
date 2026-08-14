@@ -1,0 +1,4 @@
+interface:
+  display_name: "Northstar Daily Plan"
+  short_description: "Turn safe Northstar context into a daily draft"
+  default_prompt: "Use $northstar-daily-plan to create a focused, reviewable daily-plan draft from CLI context."

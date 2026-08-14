@@ -1,0 +1,4 @@
+* @larrynode
+/.github/ @larrynode
+/src/lib/db/ @larrynode
+/src/lib/vault* @larrynode

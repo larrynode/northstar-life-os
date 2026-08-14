@@ -1,0 +1,4 @@
+interface:
+  display_name: "Northstar Weekly Review"
+  short_description: "Turn weekly progress into reviewable decisions"
+  default_prompt: "Use $northstar-weekly-review to prepare a fact-based weekly review and next-week draft."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Northstar Daily Review"
+  short_description: "Summarize today into a reflection draft"
+  default_prompt: "Use $northstar-daily-review to prepare a fact-based, reviewable reflection draft for today."

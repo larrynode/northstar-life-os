@@ -1,0 +1,4 @@
+interface:
+  display_name: "Northstar Project Health"
+  short_description: "Assess project risks into a health draft"
+  default_prompt: "Use $northstar-project-health to assess active projects and prepare a reviewable health draft."

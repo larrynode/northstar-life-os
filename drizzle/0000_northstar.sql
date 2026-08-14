@@ -1,0 +1,15 @@
+CREATE TABLE IF NOT EXISTS schema_migrations (version INTEGER PRIMARY KEY NOT NULL, applied_at TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS records (id TEXT PRIMARY KEY NOT NULL, type TEXT NOT NULL, title TEXT, status TEXT, data_json TEXT NOT NULL DEFAULT '{}', due_at TEXT, start_at TEXT, end_at TEXT, archived INTEGER NOT NULL DEFAULT 0, created_at TEXT NOT NULL, updated_at TEXT NOT NULL);
+CREATE INDEX IF NOT EXISTS records_type_idx ON records(type);
+CREATE INDEX IF NOT EXISTS records_status_idx ON records(status);
+CREATE TABLE IF NOT EXISTS tags (id TEXT PRIMARY KEY NOT NULL, name TEXT NOT NULL COLLATE NOCASE UNIQUE, created_at TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS record_tags (record_id TEXT NOT NULL REFERENCES records(id) ON DELETE CASCADE, tag_id TEXT NOT NULL REFERENCES tags(id) ON DELETE CASCADE, PRIMARY KEY(record_id, tag_id));
+CREATE TABLE IF NOT EXISTS links (id TEXT PRIMARY KEY NOT NULL, from_id TEXT NOT NULL REFERENCES records(id) ON DELETE CASCADE, to_id TEXT NOT NULL REFERENCES records(id) ON DELETE CASCADE, relation TEXT NOT NULL, metadata_json TEXT NOT NULL DEFAULT '{}', created_at TEXT NOT NULL, UNIQUE(from_id, to_id, relation));
+CREATE TABLE IF NOT EXISTS activity (id TEXT PRIMARY KEY NOT NULL, record_id TEXT REFERENCES records(id) ON DELETE SET NULL, kind TEXT NOT NULL, content_json TEXT NOT NULL DEFAULT '{}', occurred_at TEXT NOT NULL, created_at TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS attachments (id TEXT PRIMARY KEY NOT NULL, record_id TEXT REFERENCES records(id) ON DELETE SET NULL, original_name TEXT NOT NULL, stored_name TEXT NOT NULL UNIQUE, media_type TEXT, size INTEGER NOT NULL, sha256 TEXT NOT NULL, created_at TEXT NOT NULL);
+CREATE INDEX IF NOT EXISTS attachments_record_idx ON attachments(record_id);
+CREATE TABLE IF NOT EXISTS drafts (id TEXT PRIMARY KEY NOT NULL, operation TEXT NOT NULL, entity_type TEXT NOT NULL, target_id TEXT, payload_json TEXT NOT NULL DEFAULT '{}', status TEXT NOT NULL DEFAULT 'pending', reason TEXT, created_at TEXT NOT NULL, reviewed_at TEXT, applied_at TEXT);
+CREATE TABLE IF NOT EXISTS imports (id TEXT PRIMARY KEY NOT NULL, source_name TEXT, source_type TEXT NOT NULL, checksum TEXT, status TEXT NOT NULL DEFAULT 'preview', preview_json TEXT NOT NULL DEFAULT '{}', stats_json TEXT NOT NULL DEFAULT '{}', created_at TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS settings (key TEXT PRIMARY KEY NOT NULL, value_json TEXT NOT NULL DEFAULT 'null', updated_at TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS vault (id TEXT PRIMARY KEY NOT NULL, ciphertext TEXT NOT NULL, nonce TEXT, algorithm TEXT NOT NULL DEFAULT 'AES-GCM', updated_at TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS vault_settings (key TEXT PRIMARY KEY NOT NULL, value TEXT NOT NULL, updated_at TEXT NOT NULL);

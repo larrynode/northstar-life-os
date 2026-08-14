@@ -1,0 +1,58 @@
+name: Bug report
+description: Report a reproducible problem in the dashboard, CLI, or data layer.
+title: "[bug] "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Do not upload a real database, backup, export, attachment, private-vault
+        material, credential, local path, or screenshot containing personal data.
+  - type: input
+    id: version
+    attributes:
+      label: Northstar version or commit
+      placeholder: v0.1.0
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - dashboard
+        - CLI and automation
+        - database and migration
+        - import, export, or backup
+        - private vault
+        - Codex skills
+        - build or CI
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Reproduction steps with synthetic data
+      placeholder: |
+        1. Set NORTHSTAR_DATA_DIR to a disposable directory.
+        2. Run ...
+        3. Observe ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior and redacted output
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      placeholder: macOS 15, Node 24, pnpm 11

@@ -1,0 +1,29 @@
+# Optional, disabled cron template for Northstar Life OS.
+#
+# Before installing, replace /absolute/path/to/northstar-life-os with the
+# repository root and choose an approved agent runner for NORTHSTAR_RUNNER.
+# Merely storing this file does not install or enable a scheduled job.
+#
+# The runner receives a skill name and MUST:
+#   * cd to NORTHSTAR_REPO_DIR before invoking the project `northstar` CLI;
+#   * run `pnpm northstar doctor --json`, then only context/list/review reads;
+#   * create at most a pending draft with `pnpm northstar draft create <type> --data ... --json`;
+#   * never run draft approve/apply/reject/discard, import apply, or backup restore;
+#   * leave approval to a human operator.
+#
+# Set CRON_TZ if your cron implementation supports it (Vixie cron, cronie,
+# and compatible implementations do). On other schedulers, configure the job
+# timezone explicitly as Asia/Shanghai.
+
+CRON_TZ=Asia/Shanghai
+NORTHSTAR_REPO_DIR=/absolute/path/to/northstar-life-os
+NORTHSTAR_RUNNER=/absolute/path/to/approved-northstar-agent-runner
+
+# Daily plan: 08:00 Asia/Shanghai.
+0 8 * * * cd "$NORTHSTAR_REPO_DIR" && "$NORTHSTAR_RUNNER" northstar-daily-plan
+
+# Daily review: 21:30 Asia/Shanghai.
+30 21 * * * cd "$NORTHSTAR_REPO_DIR" && "$NORTHSTAR_RUNNER" northstar-daily-review
+
+# Weekly review: Sunday 20:00 Asia/Shanghai.
+0 20 * * 0 cd "$NORTHSTAR_REPO_DIR" && "$NORTHSTAR_RUNNER" northstar-weekly-review

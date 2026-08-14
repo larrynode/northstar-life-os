@@ -1,0 +1,4 @@
+interface:
+  display_name: "Northstar Inbox Triage"
+  short_description: "Classify inbox items into a safe triage draft"
+  default_prompt: "Use $northstar-inbox-triage to classify my Northstar inbox into a reviewable draft."
