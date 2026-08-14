@@ -3,3 +3,5 @@ allowBuilds:
   esbuild: true
   unrs-resolver: true
 confirmModulesPurge: false
+overrides:
+  esbuild@<0.28.1: 0.28.2
