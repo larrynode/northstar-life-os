@@ -6,6 +6,15 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Added
+
+- Polished, privacy-safe product screenshots and a visual tour in both READMEs.
+
+### Changed
+
+- Demo-mode dates now stay relative to the current date in the Shanghai time
+  zone, keeping the sample workflow useful without writing persistent data.
+
 ## [0.1.0] - 2026-08-14
 
 ### Added

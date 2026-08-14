@@ -14,6 +14,11 @@ Northstar does not require an account, telemetry, cloud sync, or an external AI
 API. The dashboard binds to `127.0.0.1:18766`; the CLI is the supported
 automation and data boundary.
 
+![Northstar Life OS dashboard](docs/screenshots/northstar-dashboard.png)
+
+_Captured in Northstar's non-persistent demo mode. No personal database content
+is shown._
+
 > **Project status:** `v0.1.0` is an early public release. The core daily loop is
 > usable, while strategy, learning, finance, health, relationships, and graph
 > views remain extension points. Real mode shows honest empty states instead of
@@ -78,6 +83,20 @@ The public Northstar library excludes a separate private library by design. Skil
 - Browser JSON import with explicit preview, duplicate detection, and transactional apply.
 - Verified, manifest-backed backups and an explicit confirmation gate for restore.
 - A loopback-only dashboard for inspecting the same public projection.
+
+## Product tour
+
+### Projects that reflect real work
+
+![Northstar project and task workflow](docs/screenshots/northstar-projects.png)
+
+### Plan the day and build the rhythm
+
+![Northstar habits, schedule, and responsive dashboard](docs/screenshots/northstar-rhythm.png)
+
+### Search and act without losing context
+
+![Northstar command palette](docs/screenshots/northstar-command-palette.png)
 
 ## CLI quick reference
 

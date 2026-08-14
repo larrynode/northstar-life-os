@@ -11,6 +11,11 @@ const output = execFileSync(
 );
 const paths = output.split("\0").filter(Boolean).sort();
 const errors = [];
+const pngSignature = Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]);
+
+const reviewedBinaryPathPatterns = [
+  /^docs\/screenshots\/northstar-(?:dashboard|projects|rhythm|command-palette)\.png$/,
+];
 
 const sensitivePathPatterns = [
   /(^|\/)(?:northstar-data|attachments|backups|exports|logs)(?:\/|$)/i,
@@ -48,6 +53,9 @@ for (const path of paths) {
   }
   const data = readFileSync(absolute);
   if (data.includes(0)) {
+    const isReviewedPng = reviewedBinaryPathPatterns.some((pattern) => pattern.test(path))
+      && data.subarray(0, pngSignature.length).equals(pngSignature);
+    if (isReviewedPng) continue;
     errors.push(`binary_file_not_reviewed:${path}`);
     continue;
   }
