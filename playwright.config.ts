@@ -1,6 +1,8 @@
 import { defineConfig, devices } from "@playwright/test";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 
-const testDataDir = `/private/tmp/northstar-life-os-e2e-${process.pid}`;
+const testDataDir = join(tmpdir(), `northstar-life-os-e2e-${process.pid}`);
 const testPort = Number(process.env.NORTHSTAR_E2E_PORT ?? 18_767);
 const testBaseUrl = `http://127.0.0.1:${testPort}`;
 
